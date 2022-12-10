@@ -72,6 +72,24 @@ int attack_menu(void){
     return attack_selection;
 }
 
+void replay_attack(int logging_time){
+    //call "candump vcan0 -l"
+    //send a "CTRL+C" after specified number of seconds to quit logging
+    //call "canplayer -I canfile.log" on the latest logfile to replay
+}
+
+void tachometer_spoofing(void){
+    //
+}
+
+void turnsignal_spoofing(void){
+
+}
+
+void door_unlock_attack(void){
+
+}
+
 int main(int argc, char **argv)
 {
 	int s; /* can raw socket */ 
