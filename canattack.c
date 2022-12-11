@@ -52,11 +52,12 @@ void replay_attack(void){
     int logging_time = 0;
     printf("How long to log for in seconds?\n");
     scanf("%d", &logging_time);
-
+    printf("Recording...\n");
     sleep(logging_time);
     system("CTRL+C");
+    printf("Replaying...\n");
 
-    system("canplayer -l mylogfile.log");
+    system("canplayer -I mylogfile.log");
 }
 
 void tachometer_spoofing(void){
